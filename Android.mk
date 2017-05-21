@@ -263,12 +263,12 @@ $(FIRMWARE_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(FIRMWARE_SYMLINKS)
 
-#Create link for wifi config
-$(shell mkdir -p $(TARGET_OUT)/etc/wifi; \
-	ln -sf /etc/firmware/wlan/prima/WCNSS_qcom_cfg.ini \
-	$(TARGET_OUT)/etc/wifi/WCNSS_qcom_cfg.ini)
+WCNSS_CFG_SYMLINK := $(TARGET_OUT_VENDOR)/firmware/wlan/prima/WCNSS_qcom_cfg.ini
+$(WCNSS_CFG_SYMLINK): $(LOCAL_INSTALLED_MODULE)
+        @mkdir -p $(dir $@)
+        $(hide) ln -sf /data/misc/wifi/$(notdir $@) $@
 
-include $(CLEAR_VARS)
+ALL_DEFAULT_INSTALLED_MODULES += $(WCNSS_CFG_SYMLINK)
 
 endif
 endif
